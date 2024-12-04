@@ -23,13 +23,13 @@ public class FileServiceImpl implements FileService {
     private static final Logger log = LoggerFactory.getLogger(FileServiceImpl.class);
 
     @Override
-    public <T> List<T> readCsvFile(String inputFile, Function<String, String[]> splitFunction, Function<String[], T> mapToEntityFunction, int linesToSkip) {
+    public <T> List<T> readCsvFile(String inputFile, Function<String, String[]> splitFunction, Function<String[], T> mapToModelFunction, int linesToSkip) {
         log.info("Reading lines from file {}", inputFile);
 
         try (Stream<String> lines = Files.lines(Path.of(inputFile))) {
             return lines.skip(linesToSkip)
                     .map(splitFunction)
-                    .map(mapToEntityFunction)
+                    .map(mapToModelFunction)
                     .toList();
         } catch (IOException e) {
             throw new RuntimeException("Error reading file", e);

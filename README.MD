@@ -71,3 +71,5 @@ java -jar target/CompassTest-1.0-SNAPSHOT.jar
 - For readability, instead of 1 file with all the results, N files may be created for each accuracy level.
 - A way to exclude or complete the already evaluated comparisons. e.g: A -> B = B -> A, right now the process is going 
 to compare it twice, once for each encounter of the comparison contact
+- Change comparison weights to be read from a config file
+- Create custom exceptions

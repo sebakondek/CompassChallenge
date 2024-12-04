@@ -18,8 +18,4 @@ public record Contact(
                 row[5]
         );
     }
-
-    public String getComparableString() {
-        return String.format("%s %s %s %s %s", firstName, lastName, email, zipcode, address);
-    }
 }

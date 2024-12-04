@@ -5,7 +5,7 @@ public enum Accuracy {
     MEDIUM(2),
     HIGH(1);
 
-    private int order;
+    private final int order;
 
     Accuracy(int order) {
         this.order = order;
