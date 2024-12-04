@@ -69,3 +69,5 @@ java -jar target/CompassTest-1.0-SNAPSHOT.jar
 - Input file should be sent via http request, or obtained from a storage service.
 - Output file should be stored in a storage service.
 - For readability, instead of 1 file with all the results, N files may be created for each accuracy level.
+- A way to exclude or complete the already evaluated comparisons. e.g: A -> B = B -> A, right now the process is going 
+to compare it twice, once for each encounter of the comparison contact

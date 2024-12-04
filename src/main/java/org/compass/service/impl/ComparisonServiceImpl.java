@@ -31,23 +31,26 @@ public class ComparisonServiceImpl implements ComparisonService {
 
         // This is a O(n^2) operation, so it will be slow for large datasets, but for this one it's fine
         // There are better options to optimize this, but because the records are so inconsistent I need to iterate through them all
-        for (int i = 0; i < contacts.size(); i++) {
-            for (int j = i + 1; j < contacts.size(); j++) {
-                Contact contact1 = contacts.get(i);
-                Contact contact2 = contacts.get(j);
+        for (Contact contact : contacts) {
+            for (Contact comparisonContact : contacts) {
+
+                //avoid comparing to itself
+                if (contact.contactId().equals(comparisonContact.contactId())) {
+                    continue;
+                }
 
                 // Email similarity
-                double emailSimilarity = jaccardSimilarity.apply(contact1.email(), contact2.email());
+                double emailSimilarity = jaccardSimilarity.apply(contact.email(), comparisonContact.email());
 
                 // Complete name similarity
-                double firstNameSimilarity = jaccardSimilarity.apply(contact1.firstName(), contact2.firstName());
-                double lastNameSimilarity = jaccardSimilarity.apply(contact1.lastName(), contact2.lastName());
+                double firstNameSimilarity = jaccardSimilarity.apply(contact.firstName(), comparisonContact.firstName());
+                double lastNameSimilarity = jaccardSimilarity.apply(contact.lastName(), comparisonContact.lastName());
 
                 // Address similarity
-                double addressSimilarity = jaccardSimilarity.apply(contact1.address(), contact2.address());
+                double addressSimilarity = jaccardSimilarity.apply(contact.address(), comparisonContact.address());
 
                 // ZipCode similarity
-                double zipCodeSimilarity = jaccardSimilarity.apply(contact1.zipcode(), contact2.zipcode());
+                double zipCodeSimilarity = jaccardSimilarity.apply(contact.zipcode(), comparisonContact.zipcode());
 
                 // Total weighted similarity
                 double totalSimilarity = (emailSimilarity * EMAIL_WEIGHT)
@@ -61,7 +64,7 @@ public class ComparisonServiceImpl implements ComparisonService {
                         : (totalSimilarity > 0.5) ? Accuracy.MEDIUM
                         : Accuracy.LOW;
 
-                comparisons.add(new Comparison(contact1, contact2, totalSimilarity, accuracy));
+                comparisons.add(new Comparison(contact, comparisonContact, totalSimilarity, accuracy));
             }
         }
 
